@@ -9,15 +9,17 @@ go build -o id1
     id1 <options> [command] (data...)
 
     Options:
+
         -url: API endpoint URL
         -id: id1 id
         -create: id to create
         -key: path to a key file (private if connect, public if create)
 
     Environment:
-        ID1_URL: Default id1 API endpoint url
-        ID1_ID: Default id1 id
-        ID1_KEY_PATH: Default key path
+    
+    ID1_URL: Default id1 API endpoint url
+    ID1_ID: Default id1 id
+    ID1_KEY_PATH: Default key path
 
     Example:
 
