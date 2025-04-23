@@ -1,0 +1,8 @@
+github.com/golang-jwt/jwt v3.2.2+incompatible h1:IfV12K8xAKAnZqdXVzCZ+TOjboZ2keLg81eXfW3O+oY=
+github.com/golang-jwt/jwt v3.2.2+incompatible/go.mod h1:8pz2t5EyA70fFQQSrl6XZXzqecmYZeUEB8OUGHkxJ+I=
+github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
+github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/qodex/id1-client-go v0.0.0-20250422220441-e033a4cc6458 h1:JK8e2wM4PMG+Wz/T9oZd5GHMcGj73/jQISvp8VbJixk=
+github.com/qodex/id1-client-go v0.0.0-20250422220441-e033a4cc6458/go.mod h1:wDIgIyWalGAKRITES5Sl3ubzkFMxr83E9YjX/3zSwnQ=
+github.com/qodex/id1-client-go v0.0.0-20250423020422-c257f795aa49 h1:SiL6q3zWuXK4JF45iJG9xp1/iu4IgAaNQN3nAKy/P8c=
+github.com/qodex/id1-client-go v0.0.0-20250423020422-c257f795aa49/go.mod h1:wDIgIyWalGAKRITES5Sl3ubzkFMxr83E9YjX/3zSwnQ=
