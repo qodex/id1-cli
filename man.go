@@ -18,12 +18,10 @@ Environment:
 
 Example:
 
-id1 -url http://localhost:8080 get:/test1/pub/key
-id1 -url http://localhost:8080 -create test1 > test1.pem
-
-export ID1_URL=http://localhost:8080
-export ID1_ID=test1
-export ID1_KEY_PATH=test1.pem
+id1 env set url=http://localhost:8080
+id1 create test1 > test.pem
+id1 env set id=test1
+id1 env set key=test.pem
 
 id1 set:/test1/pub/name Test One
 id1 get:/test1/pub/name
