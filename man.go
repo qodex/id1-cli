@@ -1,15 +1,13 @@
 package main
 
-var man = `
-Usage: 
-
-id1 <options> [command] (data...)
+var man = `Usage: id1 <options> [command] (data...)
 
 Options:
-	-url: API endpoint URL
-	-id: id1 id
-	-create: id to create
-	-key: path to a key file (private if connect, public if create)
+	- url: API endpoint URL
+	- id: id1 id
+	- create: id to create
+	- key: path to a key file (private if connect, public if create)
+	- sync: apply incoming commands to workdir
 
 Environment:
 	ID1_URL: Default id1 API endpoint url
@@ -28,5 +26,4 @@ id1 get:/test1/pub/name
 
 id1 set:/test1/pub/image < avatar.jpg
 id1 get:/test1/pub/image > image.jpg
-
 `

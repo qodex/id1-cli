@@ -4,9 +4,7 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
 github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
-github.com/qodex/ff v0.0.0-20250427061323-6908e7fb957d h1:IB3tCyqNiabA4Ab3hZE+nQZAU583RF+wTmG94tGCBNo=
-github.com/qodex/ff v0.0.0-20250427061323-6908e7fb957d/go.mod h1:hFwMrjhcIr4T1aQksyBm1g/Jph8rfJvLTGtW1neYp1A=
-github.com/qodex/id1-client-go v0.0.0-20250424103444-b448afaa82db h1:mJQeVOawWeLZ5CiVFwM/Aq2SF3fYCqRgbgUNWPKYsVw=
-github.com/qodex/id1-client-go v0.0.0-20250424103444-b448afaa82db/go.mod h1:wDIgIyWalGAKRITES5Sl3ubzkFMxr83E9YjX/3zSwnQ=
-github.com/qodex/id1-client-go v0.0.0-20250427104408-1172d783198a h1:ecdG1AJkPapl/fV4OqoJkZ7T8YHbRAZgnlKJ31zxQoA=
-github.com/qodex/id1-client-go v0.0.0-20250427104408-1172d783198a/go.mod h1:wDIgIyWalGAKRITES5Sl3ubzkFMxr83E9YjX/3zSwnQ=
+github.com/qodex/ff v0.0.0-20250428050506-44c6384e6344 h1:hf7xD5dBdIWxmf6cFfTM+1r+625+9bB2Ublh0OwAMsM=
+github.com/qodex/ff v0.0.0-20250428050506-44c6384e6344/go.mod h1:hFwMrjhcIr4T1aQksyBm1g/Jph8rfJvLTGtW1neYp1A=
+github.com/qodex/id1-client-go v0.0.0-20250428050405-37cf87988db9 h1:zLK+Q18Bfq9zmtDBTWtutRs6vTpjuvs/uK5a+3pT1ng=
+github.com/qodex/id1-client-go v0.0.0-20250428050405-37cf87988db9/go.mod h1:wDIgIyWalGAKRITES5Sl3ubzkFMxr83E9YjX/3zSwnQ=
