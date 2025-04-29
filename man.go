@@ -3,16 +3,15 @@ package main
 var man = `Usage: id1 <options> [command] (data...)
 
 Options:
+	- env [get|set|del]: .env config
+	- dir: work dir
 	- url: API endpoint URL
 	- id: id1 id
 	- create: id to create
 	- key: path to a key file (private if connect, public if create)
-	- sync: apply incoming commands to workdir
-
-Environment:
-	ID1_URL: Default id1 API endpoint url
-	ID1_ID: Default id1 id
-	ID1_KEY_PATH: Default key path
+	- mon: websocket to stdin, stdin to websocket
+	- apply: apply stdin to work dir
+	- watch: watch workdir, send events to stdout
 
 Example:
 
@@ -26,4 +25,12 @@ id1 get:/test1/pub/name
 
 id1 set:/test1/pub/image < avatar.jpg
 id1 get:/test1/pub/image > image.jpg
+
+Watch work dir, send changes to server:
+
+id1 watch | id1 mon
+
+Monitor server, apply events to work dir:
+
+id1 mon | id1 apply
 `

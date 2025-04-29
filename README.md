@@ -37,9 +37,17 @@ Read, Write keys:
     id1 get:/test1/pub/image > image.jpg
     id1 del:/test1/pub/image
 
-Connect and sync:
+Monitor server events:
 
-    id1 connect sync
+    id1 mon
+
+Apply server events to workdir:
+
+    id1 sync
+
+Watch workdir, apply changes to server:
+
+    id1 watch | id1 mon
 
 Set and delete after 60 seconds:
 

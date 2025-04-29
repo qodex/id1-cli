@@ -1,3 +1,5 @@
+github.com/fsnotify/fsnotify v1.9.0 h1:2Ml+OJNzbYCTzsxtv8vKSFD9PbJjmhYF14k/jKC7S9k=
+github.com/fsnotify/fsnotify v1.9.0/go.mod h1:8jBTzvmWwFyi3Pb8djgCCO5IBqzKJ/Jwo8TRcHyHii0=
 github.com/golang-jwt/jwt v3.2.2+incompatible h1:IfV12K8xAKAnZqdXVzCZ+TOjboZ2keLg81eXfW3O+oY=
 github.com/golang-jwt/jwt v3.2.2+incompatible/go.mod h1:8pz2t5EyA70fFQQSrl6XZXzqecmYZeUEB8OUGHkxJ+I=
 github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
@@ -8,3 +10,5 @@ github.com/qodex/ff v0.0.0-20250428050506-44c6384e6344 h1:hf7xD5dBdIWxmf6cFfTM+1
 github.com/qodex/ff v0.0.0-20250428050506-44c6384e6344/go.mod h1:hFwMrjhcIr4T1aQksyBm1g/Jph8rfJvLTGtW1neYp1A=
 github.com/qodex/id1-client-go v0.0.0-20250428050405-37cf87988db9 h1:zLK+Q18Bfq9zmtDBTWtutRs6vTpjuvs/uK5a+3pT1ng=
 github.com/qodex/id1-client-go v0.0.0-20250428050405-37cf87988db9/go.mod h1:wDIgIyWalGAKRITES5Sl3ubzkFMxr83E9YjX/3zSwnQ=
+golang.org/x/sys v0.13.0 h1:Af8nKPmuFypiUBjVoU9V20FiaFXOcuZI21p0ycVYYGE=
+golang.org/x/sys v0.13.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
