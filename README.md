@@ -11,16 +11,31 @@ Usage:
 
 Options:
 
-    - env [set|get|del]: edit .env file
+    - dir: local work dir
     - url: API endpoint URL
     - id: id1 id
-    - create: create new id
-    - key: path to private key pem file
+    - key: path to key file
     - enc: apply payload encoding
-    - connect: connect to websocket
-    - sync: apply key changes to workdir while connected
+
+Commands:
+
+    - env: [get|set|del] .env options
+    - create: create new id
+    - serve: serve work dir
+    - mon: monitor server events
+    - watch: watch work dir events
+    - apply: apply stdin commands to work dir
+
+Key Commands:
+
+    <operation>:<key>?[args] [data]
 
 ### Examples
+
+Serve work dir on port:
+
+    id1 env set dir=id1db
+    id1 serve 8080
 
 Setup .env, create id:
 
@@ -28,6 +43,14 @@ Setup .env, create id:
     id1 create test1 > test1.pem
     id1 env set id=test1
     id1 env set key=test1.pem
+
+Sync work dir changes to server:
+
+    id1 watch | id1 mon
+
+Apply server events to work dir:
+
+    id1 mon | id1 apply
 
 Read, Write keys:
 
@@ -37,32 +60,20 @@ Read, Write keys:
     id1 get:/test1/pub/image > image.jpg
     id1 del:/test1/pub/image
 
-Monitor server events:
-
-    id1 mon
-
-Apply server events to workdir:
-
-    id1 sync
-
-Watch workdir, apply changes to server:
-
-    id1 watch | id1 mon
-
 Set and delete after 60 seconds:
 
-    id1 set:/test1/temp?ttl=60 Delete Me
+    id1 set:/test1/temp\?ttl=60 Delete Me
 
-Schedule a future command:
+Schedule future command:
 
-    id1 set:/test1/.after.1745816286236 set:/test1/alert1 Future is now
+    echo "set:/test1/alert1\nFuture is now" | id1 set:/test1/.after.1745816286237
     
 Schedule archive:
 
-    id1 set:/test1/.after.1745816286236 mov:/test1/alert1 test1/archive/alert1 
+    echo "mov:/test1/alert1\ntest1/arch/alert1" | id1 set:/test1/.after.1745816286237
 
 List first 100 keys with values under 1KB:
 
-    id1 get:/test1/*?recursive=true&size-limit=1024&limit=100&keys=true
+    id1 get:/test1/\*\?recursive=true\&size-limit=1024\&limit=100\&keys=true
     
     
