@@ -28,7 +28,7 @@ func watchDir(rootpath string, dirCmd chan id1.Command, ctx context.Context) err
 		return walkErr
 	} else {
 		defer watcher.Close()
-		watch(watcher, rootpath, dirCmd, ctx)
+		watchLoop(watcher, rootpath, dirCmd, ctx)
 	}
 	return nil
 }
@@ -40,7 +40,7 @@ var opMap = map[fsnotify.Op]id1.Op{
 	fsnotify.Rename: id1.Del,
 }
 
-func watch(watcher *fsnotify.Watcher, rootpath string, cmdOut chan id1.Command, ctx context.Context) {
+func watchLoop(watcher *fsnotify.Watcher, rootpath string, cmdOut chan id1.Command, ctx context.Context) {
 	defer func() {
 		if r := recover(); r != nil {
 			log.Println("watch dir: error, chan events is closed, recover")

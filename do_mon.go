@@ -3,12 +3,25 @@ package main
 import (
 	"encoding/base64"
 	"fmt"
-	"log"
 	"os"
 	"time"
 
 	id1 "github.com/qodex/id1-client-go"
 )
+
+func mon(args id1Args, c id1.Id1Client) {
+	cmdIn, cmdOut, disconnect := connect(args.id, c, args.enc)
+	go scanCommands(cmdOut)
+	for {
+		select {
+		case cmd := <-cmdIn:
+			os.Stdout.Write(fmt.Appendf(nil, "%s\n\n", string(cmd.Bytes())))
+		case <-disconnect:
+			fmt.Println("disconnected")
+			os.Exit(0)
+		}
+	}
+}
 
 func connect(id string, c id1.Id1Client, enc string) (chan id1.Command, chan id1.Command, chan bool) {
 	if disconnect, err := c.Connect(); err != nil {
@@ -51,7 +64,7 @@ func send(cmdOut chan id1.Command, c id1.Id1Client) {
 		cmd := <-cmdOut
 		if cmd.Op != id1.Unknown {
 			if err := c.Send(cmd); err != nil {
-				log.Println(err)
+				fmt.Printf("send err %s\n", err)
 			}
 		}
 	}

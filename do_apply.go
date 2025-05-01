@@ -3,12 +3,28 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"unicode/utf8"
 
 	"github.com/qodex/ff"
 	id1 "github.com/qodex/id1-client-go"
 )
+
+func apply(dir string) {
+	cmdIn := make(chan id1.Command)
+	ctrlC := make(chan os.Signal, 1)
+	signal.Notify(ctrlC, os.Interrupt)
+	go scanCommands(cmdIn)
+	for {
+		select {
+		case cmd := <-cmdIn:
+			applyCmd(cmd, dir)
+		case <-ctrlC:
+			os.Exit(0)
+		}
+	}
+}
 
 func applyCmd(cmd id1.Command, workdir string) {
 	if f, ok := syncOpFunc[cmd.Op]; ok {
