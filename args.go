@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -12,10 +11,10 @@ import (
 )
 
 type id1Args struct {
-	args                                                   ff.OsArgs
-	env, create, watch, mon, apply, serve                  bool
-	dir, url, id, createId, keyPath, key, enc, envOp, port string
-	cmd                                                    *id1.Command
+	args                                                           ff.OsArgs
+	env, create, watch, mon, apply, serve, filter                  bool
+	dir, url, id, createId, keyPath, key, enc, envOp, port, regexp string
+	cmd                                                            *id1.Command
 }
 
 func (t id1Args) KeyVal(name, key, value string) (string, string) {
@@ -42,6 +41,8 @@ func getArgs() id1Args {
 	id1Args.enc = args.Val("enc", os.Getenv("ID1_ENC"))
 	id1Args.env = args.Has("env")
 	id1Args.envOp = args.Val("env", "")
+	id1Args.filter = args.Has("filter")
+	id1Args.regexp = args.Val("filter", ".")
 	id1Args.watch = args.Has("watch")
 	id1Args.mon = args.Has("mon")
 	id1Args.apply = args.Has("apply")
@@ -61,12 +62,11 @@ func getArgs() id1Args {
 
 	if len(cmdStr) > 0 {
 		cmdData := args.RestAfter(cmdStr, "")
-		stdinData := scanData()
+		stdinData := ff.ScanStdinBytes()
 		if len(stdinData) > 0 {
 			cmdData = string(stdinData)
 		}
 		if cmd, err := id1.ParseCommand(fmt.Appendf(nil, "%s\n%s", cmdStr, cmdData)); err == nil {
-			log.Printf("parsed cmd: %s", cmd)
 			id1Args.cmd = &cmd
 		}
 	}

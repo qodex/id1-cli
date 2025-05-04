@@ -5,21 +5,36 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"regexp"
 	"unicode/utf8"
 
 	"github.com/qodex/ff"
 	id1 "github.com/qodex/id1-client-go"
 )
 
-func apply(dir string) {
+func apply(args id1Args) {
+	re, err := regexp.Compile(args.regexp)
+	if args.filter && err != nil {
+		fmt.Printf("regexp err %s", err)
+		os.Exit(1)
+	}
 	cmdIn := make(chan id1.Command)
 	ctrlC := make(chan os.Signal, 1)
+	eof := make(chan bool)
 	signal.Notify(ctrlC, os.Interrupt)
-	go scanCommands(cmdIn)
+	go scanCommands(cmdIn, eof)
 	for {
 		select {
 		case cmd := <-cmdIn:
-			applyCmd(cmd, dir)
+			filterPass := true
+			if args.filter && re != nil && !re.MatchString(cmd.String()) {
+				filterPass = false
+			}
+			if filterPass {
+				applyCmd(cmd, args.dir)
+			}
+		case <-eof:
+			os.Exit(0)
 		case <-ctrlC:
 			os.Exit(0)
 		}

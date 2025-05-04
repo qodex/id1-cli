@@ -13,14 +13,16 @@ func main() {
 		}
 	case args.serve:
 		serve(args.dir, args.port)
+	case args.filter:
+		filter(args)
+	case args.apply:
+		apply(args)
+	case args.watch:
+		watch(args)
 	case args.mon:
 		if c, err := getClient(args); err == nil {
 			mon(args, *c)
 		}
-	case args.apply:
-		apply(args.dir)
-	case args.watch:
-		watch(args.dir)
 	case args.cmd != nil:
 		if c, err := getClient(args); err == nil {
 			cmdExec(*args.cmd, *c)

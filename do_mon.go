@@ -4,18 +4,33 @@ import (
 	"encoding/base64"
 	"fmt"
 	"os"
+	"regexp"
 	"time"
 
 	id1 "github.com/qodex/id1-client-go"
 )
 
 func mon(args id1Args, c id1.Id1Client) {
+	re, err := regexp.Compile(args.regexp)
+	if args.filter && err != nil {
+		fmt.Printf("regexp err %s", err)
+		os.Exit(1)
+	}
 	cmdIn, cmdOut, disconnect := connect(args.id, c, args.enc)
-	go scanCommands(cmdOut)
+	eof := make(chan bool)
+	go scanCommands(cmdOut, eof)
 	for {
 		select {
 		case cmd := <-cmdIn:
-			os.Stdout.Write(fmt.Appendf(nil, "%s\n\n", string(cmd.Bytes())))
+			filterPass := true
+			if args.filter && re != nil && !re.MatchString(cmd.String()) {
+				filterPass = false
+			}
+			if filterPass {
+				os.Stdout.Write(fmt.Appendf(nil, "%s\n\n", string(cmd.Bytes())))
+			}
+		case <-eof:
+			os.Exit(0)
 		case <-disconnect:
 			fmt.Println("disconnected")
 			os.Exit(0)
@@ -29,7 +44,7 @@ func connect(id string, c id1.Id1Client, enc string) (chan id1.Command, chan id1
 		os.Exit(1)
 		return nil, nil, nil
 	} else {
-		fmt.Println("connected")
+		fmt.Printf("connected\n\n")
 		cmdIn := make(chan id1.Command, 32)
 		cmdOut := make(chan id1.Command)
 

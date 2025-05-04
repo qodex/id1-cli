@@ -1,25 +1,35 @@
 package main
 
 import (
-	"bufio"
-	"os"
+	"bytes"
+	"encoding/base64"
 
+	"github.com/qodex/ff"
 	id1 "github.com/qodex/id1-client-go"
 )
 
-func scanCommands(cmdOut chan id1.Command) {
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Buffer(make([]byte, 0), 10*id1.MB)
+func scanCommands(cmdOut chan id1.Command, eof chan bool) {
 
-	data := []byte{}
-	for scanner.Scan() {
-		data = append(data, scanner.Bytes()...)
-		data = append(data, byte('\n'))
-		if len(data) > 2 && string(data[len(data)-2:]) == "\n\n" {
+	dataIn := make(chan []byte, 8)
+	scanEof := make(chan bool)
+
+	go ff.ScanStdin([]byte("\n\n"), dataIn, scanEof)
+
+	for {
+		select {
+		case <-scanEof:
+			eof <- true
+			return
+		case data := <-dataIn:
+			data = bytes.TrimLeft(data, "\n")
 			if cmd, err := id1.ParseCommand(data[:len(data)-2]); err == nil {
+				if cmd.Args["enc"] == "base64" {
+					if data, err := base64.StdEncoding.DecodeString(string(cmd.Data)); err == nil {
+						cmd.Data = data
+					}
+				}
 				cmdOut <- cmd
 			}
-			data = []byte{}
 		}
 	}
 }

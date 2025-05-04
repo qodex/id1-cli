@@ -2,9 +2,16 @@ module github.com/qodex/id1-cli
 
 go 1.23.3
 
-require github.com/qodex/ff v1.0.0
+// replace github.com/qodex/id1 => ../id1
 
-require github.com/qodex/id1-client-go v1.0.0
+// replace github.com/qodex/id1-client-go => ../id1-client-go
+
+// replace github.com/qodex/ff => ../ff
+
+require (
+	github.com/qodex/ff v1.0.1
+	github.com/qodex/id1-client-go v1.0.1
+)
 
 require (
 	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
