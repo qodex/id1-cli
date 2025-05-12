@@ -13,8 +13,6 @@ func main() {
 		}
 	case args.serve:
 		serve(args.dir, args.port)
-	case args.filter:
-		filter(args)
 	case args.apply:
 		apply(args)
 	case args.watch:
@@ -23,6 +21,8 @@ func main() {
 		if c, err := getClient(args); err == nil {
 			mon(args, *c)
 		}
+	case args.filter:
+		filter(args)
 	case args.cmd != nil:
 		if c, err := getClient(args); err == nil {
 			cmdExec(*args.cmd, *c)

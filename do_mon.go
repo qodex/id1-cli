@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/base64"
 	"fmt"
+	"io"
 	"os"
+	"os/exec"
 	"regexp"
 	"time"
 
@@ -21,19 +23,25 @@ func mon(args id1Args, c id1.Id1Client) {
 	go scanCommands(cmdOut, eof)
 	for {
 		select {
-		case cmd := <-cmdIn:
-			filterPass := true
-			if args.filter && re != nil && !re.MatchString(cmd.String()) {
-				filterPass = false
-			}
-			if filterPass {
-				os.Stdout.Write(fmt.Appendf(nil, "%s\n\n", string(cmd.Bytes())))
-			}
 		case <-eof:
 			os.Exit(0)
 		case <-disconnect:
 			fmt.Println("disconnected")
 			os.Exit(0)
+		case cmd := <-cmdIn:
+			filterPass := !args.filter || (re != nil && re.MatchString(cmd.String()))
+			if !filterPass {
+				continue
+			}
+			keys := cmd.Key.Map(args.keymap)
+			for _, k := range keys {
+				cmd.Key = k
+				dataOut := cmd.Bytes()
+				if args.exec {
+					dataOut, _ = osCmdExec(args.execCmdName, args.execCmdArgs, cmd.Bytes())
+				}
+				os.Stdout.Write(fmt.Appendf(nil, "%s\n\n", string(dataOut)))
+			}
 		}
 	}
 }
@@ -83,4 +91,17 @@ func send(cmdOut chan id1.Command, c id1.Id1Client) {
 			}
 		}
 	}
+}
+
+func osCmdExec(name string, args []string, input []byte) ([]byte, error) {
+	osCmd := exec.Command(name, args...)
+	if cmdStdIn, err := osCmd.StdinPipe(); err != nil {
+		fmt.Printf("cmdExec stdin err %s", err)
+	} else {
+		go func() {
+			defer cmdStdIn.Close()
+			io.Writer.Write(cmdStdIn, input)
+		}()
+	}
+	return osCmd.Output()
 }

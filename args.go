@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/joho/godotenv"
 	"github.com/qodex/ff"
@@ -11,10 +12,13 @@ import (
 )
 
 type id1Args struct {
-	args                                                           ff.OsArgs
-	env, create, watch, mon, apply, serve, filter                  bool
-	dir, url, id, createId, keyPath, key, enc, envOp, port, regexp string
-	cmd                                                            *id1.Command
+	args                                                ff.OsArgs
+	env, create, watch, mon, apply, serve, exec, filter bool
+	dir, url, id, keyPath, key, enc, port               string
+	createId, envOp, regexp, keymap                     string
+	execCmdName                                         string
+	execCmdArgs                                         []string
+	cmd                                                 *id1.Command
 }
 
 func (t id1Args) KeyVal(name, key, value string) (string, string) {
@@ -42,7 +46,11 @@ func getArgs() id1Args {
 	id1Args.env = args.Has("env")
 	id1Args.envOp = args.Val("env", "")
 	id1Args.filter = args.Has("filter")
-	id1Args.regexp = args.Val("filter", ".")
+	id1Args.regexp = args.Val("filter", ".*")
+	id1Args.keymap = args.Val("map", "")
+	id1Args.exec = args.Has("exec")
+	id1Args.execCmdName = args.Val("exec", "echo")
+	id1Args.execCmdArgs = strings.Split(args.RestAfter(id1Args.execCmdName, ""), " ")
 	id1Args.watch = args.Has("watch")
 	id1Args.mon = args.Has("mon")
 	id1Args.apply = args.Has("apply")

@@ -23,11 +23,13 @@ func watch(args id1Args) {
 		case <-ctx.Done():
 			return
 		case cmd := <-cmdOut:
-			filterPass := true
-			if args.filter && re != nil && !re.MatchString(cmd.String()) {
-				filterPass = false
+			filterPass := !args.filter || (re != nil && re.MatchString(cmd.String()))
+			if !filterPass {
+				continue
 			}
-			if filterPass {
+			keys := cmd.Key.Map(args.keymap)
+			for _, k := range keys {
+				cmd.Key = k
 				os.Stdout.Write(fmt.Appendf(cmd.Bytes(), "%s", "\n\n"))
 			}
 		}

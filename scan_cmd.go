@@ -22,7 +22,7 @@ func scanCommands(cmdOut chan id1.Command, eof chan bool) {
 			return
 		case data := <-dataIn:
 			data = bytes.TrimLeft(data, "\n")
-			if cmd, err := id1.ParseCommand(data[:len(data)-2]); err == nil {
+			if cmd, err := id1.ParseCommand(data); err == nil {
 				if cmd.Args["enc"] == "base64" {
 					if data, err := base64.StdEncoding.DecodeString(string(cmd.Data)); err == nil {
 						cmd.Data = data
